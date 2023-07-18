@@ -8,18 +8,19 @@ class Category:
 
     def __str__(self):
         str = ""
-        cat_str_len = len(self.category)
-        num_of_stars = 30 - cat_str_len
+        category_str_len = len(self.category)
+        num_of_stars = 30 - category_str_len
 
         # error prone here
         num_of_stars = num_of_stars // 2
         extra = 0
-        if not cat_str_len % 2 == 0:
+        if not category_str_len % 2 == 0:
             extra = 1
 
         str += ("*" * num_of_stars) + self.category +("*" * (num_of_stars + extra)) + "\n"
         for item in self.ledger:
-            str += item["description"][:24] + "\n"
+            right_align_val = 30 - len(item["description"][:24]) - 1
+            str += item["description"][:23] + " " + f"{item['amount'] : >{right_align_val}}" + "\n"
 
         return str
 
