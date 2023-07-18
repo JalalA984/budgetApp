@@ -7,7 +7,7 @@ class Category:
         self.balance = 0
 
     def __str__(self):
-        str = ""
+        str_final = ""
         category_str_len = len(self.category)
         num_of_stars = 30 - category_str_len
 
@@ -17,12 +17,12 @@ class Category:
         if not category_str_len % 2 == 0:
             extra = 1
 
-        str += ("*" * num_of_stars) + self.category +("*" * (num_of_stars + extra)) + "\n"
+        str_final += ("*" * num_of_stars) + self.category +("*" * (num_of_stars + extra)) + "\n"
         for item in self.ledger:
             right_align_val = 30 - len(item["description"][:24]) - 1
-            str += item["description"][:23] + " " + f"{item['amount'] : >{right_align_val}}" + "\n"
+            str_final += item["description"][:23] + " " + f"{item['amount'] : >{right_align_val}}" + "\n"
 
-        return str
+        return str_final
 
 
     # Deposit amount
@@ -51,4 +51,22 @@ class Category:
         return amount < self.balance
 
 
-#def create_spend_chart(categories):
+def create_spend_chart(categories):
+    str_final = "Percentage spent by category" + "\n"
+    line_100 = "100|"
+    line_90 = "90|"
+    line_80 = "80|"
+    line_70 = "70|"
+    line_60 = "60|"
+    line_50 = "50|"
+    line_40 = "40|"
+    line_30 = "30|"
+    line_20 = "20|"
+    line_10 = "10|"
+    line_0 = "0|"
+    line_dash = "    ----------"
+    str_final += f"{line_100 : >{14}}" + "\n" + f"{line_90 : >{14}}" + "\n" + f"{line_80 : >{14}}" + "\n" +\
+                 f"{line_70 : >{14}}" + "\n" + f"{line_60 : >{14}}" + "\n" +f"{line_50 : >{14}}" + "\n" +\
+                 f"{line_40 : >{14}}" + "\n" +f"{line_30 : >{14}}" + "\n" +f"{line_20 : >{14}}" +\
+                 "\n" +f"{line_10 : >{14}}" + "\n" +f"{line_0 : >{14}}" + "\n" + f"{line_dash : >{14}}"
+    return str_final
