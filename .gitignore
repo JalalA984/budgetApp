@@ -4,4 +4,5 @@
 # Chosen to ignore
 venv
 .idea
+**/__pycache__/
 
