@@ -1,3 +1,6 @@
+from math import floor
+
+
 class Category:
 
     # Initialize instance variables
@@ -52,6 +55,23 @@ class Category:
 
 
 def create_spend_chart(categories):
+    # Calculate overall percentage spent for each category in list
+    overall_spent = 0
+    category_spent = dict()
+    for cgory in categories:
+        for item in cgory.ledger:
+            if item["amount"] < 0:
+                overall_spent += abs(item["amount"])
+                category_spent[cgory.category] = category_spent.get(cgory.category,0) + abs(item["amount"])
+
+    for cgory in category_spent:
+        # Update dictionary values to percentages and round down to nearest tenth
+        category_spent[cgory] = floor(((category_spent[cgory] / overall_spent) * 100) / 10) * 10
+
+
+
+
+
     str_final = "Percentage spent by category" + "\n"
     line_100 = "100|"
     line_90 = "90|"
