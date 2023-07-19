@@ -22,10 +22,13 @@ class Category:
             extra = 1
 
         str_final += ("*" * num_of_stars) + self.category +("*" * (num_of_stars + extra)) + "\n"
+        total = 0
         for item in self.ledger:
             right_align_val = 30 - len(item["description"][:24]) - 1
-            str_final += item["description"][:23] + " " + f"{item['amount'] : >{right_align_val}}" + "\n"
+            str_final += item["description"][:23] + " " + f"{format(item['amount'], '.2f') : >{right_align_val}}" + "\n"
+            total += item["amount"]
 
+        str_final += "Total: " + str(total)
         return str_final
 
 
