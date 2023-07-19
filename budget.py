@@ -52,7 +52,10 @@ class Category:
         return enough_funds
 
     def check_funds(self, amount):
-        return amount < self.balance
+        if amount > self.balance:
+            return False
+        else:
+            return True
 
 
 def create_spend_chart(categories):
