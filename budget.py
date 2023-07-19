@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from math import floor
 
 
@@ -64,29 +65,68 @@ def create_spend_chart(categories):
                 overall_spent += abs(item["amount"])
                 category_spent[cgory.category] = category_spent.get(cgory.category,0) + abs(item["amount"])
 
+    category_spent = OrderedDict((list(category_spent.items())))
+
     for cgory in category_spent:
         # Update dictionary values to percentages and round down to nearest tenth
         category_spent[cgory] = floor(((category_spent[cgory] / overall_spent) * 100) / 10) * 10
 
+    # Calculate dashes for x-axis
+    number_of_dashes = 0
+    for cgory in category_spent:
+        number_of_dashes += 3
+    if number_of_dashes != 0:
+        number_of_dashes += 1
+    line_dash = "    "
+    for _ in range(number_of_dashes):
+        line_dash += "-"
 
-
-
+    # Define constants needed for formatting
+    overall_width = len(line_dash)
 
     str_final = "Percentage spent by category" + "\n"
-    line_100 = "100|"
-    line_90 = "90|"
-    line_80 = "80|"
-    line_70 = "70|"
-    line_60 = "60|"
-    line_50 = "50|"
-    line_40 = "40|"
-    line_30 = "30|"
-    line_20 = "20|"
-    line_10 = "10|"
-    line_0 = "0|"
-    line_dash = "    ----------"
-    str_final += f"{line_100 : >{14}}" + "\n" + f"{line_90 : >{14}}" + "\n" + f"{line_80 : >{14}}" + "\n" +\
-                 f"{line_70 : >{14}}" + "\n" + f"{line_60 : >{14}}" + "\n" +f"{line_50 : >{14}}" + "\n" +\
-                 f"{line_40 : >{14}}" + "\n" +f"{line_30 : >{14}}" + "\n" +f"{line_20 : >{14}}" +\
-                 "\n" +f"{line_10 : >{14}}" + "\n" +f"{line_0 : >{14}}" + "\n" + f"{line_dash : >{14}}"
+    line_100 = "100| "
+    line_90 = " 90| "
+    line_80 = " 80| "
+    line_70 = " 70| "
+    line_60 = " 60| "
+    line_50 = " 50| "
+    line_40 = " 40| "
+    line_30 = " 30| "
+    line_20 = " 20| "
+    line_10 = " 10| "
+    line_0 = "  0| "
+
+    for cgory in category_spent:
+        if category_spent[cgory] >= 0:
+            line_0 += "o  "
+        if category_spent[cgory] >= 10:
+            line_10 += "o  "
+        if category_spent[cgory] >= 20:
+            line_20 += "o  "
+        if category_spent[cgory] >= 30:
+            line_30 += "o  "
+        if category_spent[cgory] >= 40:
+            line_40 += "o  "
+        if category_spent[cgory] >= 50:
+            line_50 += "o  "
+        if category_spent[cgory] >= 60:
+            line_60 += "o  "
+        if category_spent[cgory] >= 70:
+            line_70 += "o  "
+        if category_spent[cgory] >= 80:
+            line_80 += "o  "
+        if category_spent[cgory] >= 90:
+            line_90 += "o  "
+        if category_spent[cgory] >= 100:
+            line_100 += "o  "
+
+
+
+
+
+    str_final += f"{line_100 : <{overall_width}}" + "\n" + f"{line_90 : <{overall_width}}" + "\n" + f"{line_80 : <{overall_width}}" + "\n" +\
+                 f"{line_70 : <{overall_width}}" + "\n" + f"{line_60 : <{overall_width}}" + "\n" +f"{line_50 : <{overall_width}}" + "\n" +\
+                 f"{line_40 : <{overall_width}}" + "\n" +f"{line_30 : <{overall_width}}" + "\n" +f"{line_20 : <{overall_width}}" +\
+                 "\n" +f"{line_10 : <{overall_width}}" + "\n" +f"{line_0 : <{overall_width}}" + "\n" + f"{line_dash : <{overall_width}}"
     return str_final
