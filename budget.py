@@ -77,6 +77,7 @@ def create_spend_chart(categories):
         # Update dictionary values to percentages and round down to nearest tenth
         category_spent[cgory] = floor(((category_spent[cgory] / overall_spent) * 100) / 10) * 10
 
+
     # Calculate dashes for x-axis
     number_of_dashes = 0
     for cgory in category_spent:
@@ -106,33 +107,80 @@ def create_spend_chart(categories):
     for cgory in category_spent:
         if category_spent[cgory] >= 0:
             line_0 += "o  "
+        else:
+            line_0 += "   "
         if category_spent[cgory] >= 10:
             line_10 += "o  "
+        else:
+            line_10 += "   "
         if category_spent[cgory] >= 20:
             line_20 += "o  "
+        else:
+            line_20 += "   "
         if category_spent[cgory] >= 30:
             line_30 += "o  "
+        else:
+            line_30 += "   "
         if category_spent[cgory] >= 40:
             line_40 += "o  "
+        else:
+            line_40 += "   "
         if category_spent[cgory] >= 50:
             line_50 += "o  "
+        else:
+            line_50 += "   "
         if category_spent[cgory] >= 60:
             line_60 += "o  "
+        else:
+            line_60 += "   "
         if category_spent[cgory] >= 70:
             line_70 += "o  "
+        else:
+            line_70 += "   "
         if category_spent[cgory] >= 80:
             line_80 += "o  "
+        else:
+            line_80 += "   "
         if category_spent[cgory] >= 90:
             line_90 += "o  "
+        else:
+            line_90 += "   "
         if category_spent[cgory] >= 100:
             line_100 += "o  "
+        else:
+            line_100 += "   "
+
+    # Find longest category name
+    longest_str = ""
+    for cgory in category_spent:
+        if len(cgory) > len(longest_str):
+            longest_str = cgory
+
+    num_of_letter_lines = list()
+    for x in range(len(longest_str)):
+        num_of_letter_lines.append("     ")
 
 
+    for cgory in category_spent:
+        idx = 0
+        for _ in range(len(longest_str)):
+            try:
+                num_of_letter_lines[idx] += cgory[idx] + "  "
+                idx += 1
+            except:
+                curr_idx = idx
+                for _ in range(len(longest_str) - idx):
+                    num_of_letter_lines[curr_idx] += "   "
+                    curr_idx += 1
+                break
 
+    str_final += line_100 + "\n" + line_90 + "\n" + line_80 + "\n" + line_70 + "\n" + line_60 + "\n" + line_50 + "\n"\
+                 + line_40 + "\n" + line_30 + "\n" + line_20 + "\n" + line_10 + "\n" + line_0 + "\n" + line_dash + "\n"
 
+    for line in num_of_letter_lines:
+        if line != num_of_letter_lines[-1]:
+            str_final += line + "\n"
+        else:
+            str_final += line
 
-    str_final += f"{line_100 : <{overall_width}}" + "\n" + f"{line_90 : <{overall_width}}" + "\n" + f"{line_80 : <{overall_width}}" + "\n" +\
-                 f"{line_70 : <{overall_width}}" + "\n" + f"{line_60 : <{overall_width}}" + "\n" +f"{line_50 : <{overall_width}}" + "\n" +\
-                 f"{line_40 : <{overall_width}}" + "\n" +f"{line_30 : <{overall_width}}" + "\n" +f"{line_20 : <{overall_width}}" +\
-                 "\n" +f"{line_10 : <{overall_width}}" + "\n" +f"{line_0 : <{overall_width}}" + "\n" + f"{line_dash : <{overall_width}}"
     return str_final
